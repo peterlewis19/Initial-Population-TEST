@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -6,61 +7,63 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        int NUM_OF_POINTS = 400;
+        int NUM_OF_POINTS = 5;
         int CLOSEST_N = 8;
 
         Node destination;
         Node current;
         int k=0;
 
-        ArrayList<Node>[] neighboursOfANode = new ArrayList[NUM_OF_POINTS];
+        ArrayList<Node> neighboursOfANode = new ArrayList<>();
+        ArrayList<Node> finalRoute = new ArrayList<>();
 
-        //generates 50 random nodes
-        Node[] graph = generatePoints(NUM_OF_POINTS);
-        destination = graph[NUM_OF_POINTS-1];
-        current = graph[0];
+        //gets map data from file
+        /*TODO:
+        *  -Get the initial nodes from a file and store in arrayList
+        *  -Get the neighbours for each Node, add them using add neighbour.
+        * */
+        //Node[] graph = generatePoints(NUM_OF_POINTS);
 
-        //for each node recognise the 5 closest neighbours
-        //Node[] fiveClosest = new Node[CLOSEST_N];
+        ArrayList<Node> graph = FileHandler.readNodesFromFile("map.txt");
+        destination = graph.getLast();
+        current = graph.get(0);
 
-            //finds the 5 closest nodes to the current node, and randomly chooses from those to make neighbours
-        //for (int k = 0; k < graph.length; k++) {
+        //adds the neighbours to each node
+        for (Node node: graph){
+            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
+
+            for (Node neighbour: neighboursOfThisNode){
+                node.addNeighbour(neighbour);
+            }
+        }
+
+
+        //from the currentNode, it checks against the neighbours and moves to the
+        // neighbour closest to the destination, until it reaches destination or it
+        // reaches an arbitrary number of points
         while (!current.equals(destination) && k < NUM_OF_POINTS ){
-            current = graph[k];
-
             //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
             //sorting by distance to finalNode
-            Node[] sortedForCurrentGraph = graph.clone();
-
-            //Arrays.sort(sortedForCurrentGraph, Comparator.comparingDouble(destination::distanceTo));
-
             neighboursOfANode = current.getNeighbours();
 
-                //arraylist containing Node, neighbour1, neighbour2... etc to add to allNeigbours at the end
-            ArrayList<Node> nodeAndNeighbours = new ArrayList<>();
-            nodeAndNeighbours.add(current);
 
+            //sorts neighbours of a node then picks first
+            // to get the neighbour closest to destination
+            neighboursOfANode.sort(Comparator.comparingDouble(destination::distanceTo));
+            current = neighboursOfANode.get(0);
 
-            for (Node neighbour: current.getNeighbours()){
-                System.out.println(neighbour);
-
-                nodeAndNeighbours.add(neighbour);
-            }
-
-            allNeighbours[k] = nodeAndNeighbours;
-                //System.out.println();
+            finalRoute.add(current);
 
             k++;
         }
 
-            //frane.drawFrame(allNeighbours);
-
-
-
+        for (Node node: finalRoute){
+            System.out.println(node);
+        }
 
         //using allNeighbours, draw the graph
-        NewFrame frame = new NewFrame();
-        frame.drawFrame(allNeighbours);
+        //NewFrame frame = new NewFrame();
+        //frame.drawFrame(finalRoute);
 
     }
 
@@ -76,7 +79,7 @@ public class Main {
             randomY = random.nextInt(0,700);
 
             //adds the coordinates to instantiate the Node
-            int[] coords = {randomX, randomY};
+            double[] coords = {randomX, randomY};
             allNodes[i] = new Node(coords); //Node is added to allNodes
         }
 

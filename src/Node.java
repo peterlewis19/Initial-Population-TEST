@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Node {
-    private int[] coords;
+    private double[] coords;
     private ArrayList<Node> neighbours;
 
-    public Node(int[] coords){
+    public Node(double[] coords){
         this.coords = coords;
         this.neighbours = new ArrayList<>();
     }
@@ -32,17 +32,17 @@ public class Node {
 
     }
 
-    public int[] getCoords(){
+    public double[] getCoords(){
         return coords;
     }
 
     public String toString(){
-        int[] coords = getCoords();
-        int x = coords[0];
-        int y = coords[1];
+        double[] coords = getCoords();
+        double x = coords[0];
+        double y = coords[1];
 
-        String strx = Integer.toString(x);
-        String stry = Integer.toString(y);
+        String strx = Double.toString(x);
+        String stry = Double.toString(y);
 
         return strx + ", " + stry;
     }
@@ -51,8 +51,8 @@ public class Node {
     public double distanceTo(Node matilda){
         double distance;
 
-        int changeInX = Math.abs(coords[0] - matilda.getCoords()[0]);
-        int changeInY = Math.abs(coords[1] - matilda.getCoords()[1]);
+        double changeInX = Math.abs(coords[0] - matilda.getCoords()[0]);
+        double changeInY = Math.abs(coords[1] - matilda.getCoords()[1]);
 
         //use pythagorean theorem to work out the distance diagonally
         distance = Math.sqrt(Math.pow(changeInX,2) + Math.pow(changeInY,2));

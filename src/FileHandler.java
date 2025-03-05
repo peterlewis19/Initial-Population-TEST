@@ -185,9 +185,11 @@ public class FileHandler {
         return outputString;
     }
 
-    public static String readNeighboursFromNode(Node node, String fileName){
+    public static ArrayList<Node> readNeighboursFromNode(Node node, String fileName){
         String nodeName = node.toString();
         int length = nodeName.length();
+
+        ArrayList<Node> neighboursToAdd = new ArrayList<>();
 
         String line = "";
         String finalLine="";
@@ -204,6 +206,26 @@ public class FileHandler {
                 if (line.substring(0,length).equals(nodeName)){
                     finalLine=line;
                     found=true;
+
+                    //cuts off line to only include first Node (home node)
+                    String[] allNodes = line.split("-");
+
+                    for (int i=1; i < allNodes.length;i++){
+                        String unformattedNode = allNodes[i];
+                        //becomes "xx", "yy"
+                        String[] formattedNode = unformattedNode.substring(1,unformattedNode.length()-1).split(",");
+                        //System.out.println(formattedNode[0] + ", "+ formattedNode[1]);
+
+                        //separate x and y from original String
+                        double x = Double.parseDouble(formattedNode[0]);
+                        double y = Double.parseDouble(formattedNode[1]);
+
+                        Node newNode = new Node(new double[]{x,y});
+
+                        neighboursToAdd.add(newNode);
+                    }
+
+                    line=br.readLine();
                 }
             }
 
@@ -212,7 +234,47 @@ public class FileHandler {
             e.printStackTrace();
         }
 
-        return finalLine;
+        return neighboursToAdd;
+    }
+
+    //adds all Nodes from the input file
+    public static ArrayList<Node> readNodesFromFile(String fileName){
+        ArrayList<Node> allNodes = new ArrayList<>();
+        String line = "";
+
+        try (
+                FileReader fr = new FileReader(fileName);
+                BufferedReader br = new BufferedReader(fr);
+        ) {
+            line = br.readLine();
+
+            while (line != null){
+                //cuts off line to only include first Node (home node)
+                //becomes "[xx,yy]"
+                String homeNode = line.split("-")[0];
+
+                //System.out.println(homeNode);
+
+                //becomes "xx", "yy"
+                String[] formattedNode = homeNode.substring(1,homeNode.length()-1).split(",");
+                //System.out.println(formattedNode[0] + ", "+ formattedNode[1]);
+
+                //separate x and y from original String
+                double x = Double.parseDouble(formattedNode[0]);
+                double y = Double.parseDouble(formattedNode[1]);
+
+                Node newNode = new Node(new double[]{x,y});
+                allNodes.add(newNode);
+
+                line=br.readLine();
+            }
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return allNodes;
     }
 
     public static ArrayList<String> bufferedRead(){
@@ -237,5 +299,7 @@ public class FileHandler {
 
         return allLines;
     }
+
+
 }
 
