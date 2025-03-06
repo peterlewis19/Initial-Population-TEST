@@ -25,35 +25,41 @@ public class Main {
         //Node[] graph = generatePoints(NUM_OF_POINTS);
 
         ArrayList<Node> graph = FileHandler.readNodesFromFile("map.txt");
+        System.out.println("will read nodes from file");
         destination = graph.getLast();
         current = graph.get(0);
 
         //adds the neighbours to each node
         for (Node node: graph){
-            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
+            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt"); /// gets stuck on this MAKE MORE EFFICIENT
+            //System.out.println("can read neighbours from Node");
 
             for (Node neighbour: neighboursOfThisNode){
                 node.addNeighbour(neighbour);
             }
         }
 
+        System.out.println("neighbours are added");
+
 
         //from the currentNode, it checks against the neighbours and moves to the
         // neighbour closest to the destination, until it reaches destination or it
         // reaches an arbitrary number of points
-        while (!current.equals(destination) && k < NUM_OF_POINTS ){
+        while (!current.equals(destination) && k < 15 ){
             //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
             //sorting by distance to finalNode
             neighboursOfANode = current.getNeighbours();
 
-
+            System.out.println("gets past getting the neighbours");
             //sorts neighbours of a node then picks first
             // to get the neighbour closest to destination
             neighboursOfANode.sort(Comparator.comparingDouble(destination::distanceTo));
+            System.out.println("gets past sorting");
             current = neighboursOfANode.get(0);
 
             finalRoute.add(current);
 
+            System.out.println(k);
             k++;
         }
 
