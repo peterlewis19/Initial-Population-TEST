@@ -31,7 +31,11 @@ public class Main {
 
         //adds the neighbours to each node
         for (Node node: graph){
-            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt"); /// gets stuck on this MAKE MORE EFFICIENT
+            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
+            /// gets stuck on this MAKE MORE EFFICIENT
+            /*TODO:
+            *  - combine neighbour adding with Node adding
+            *  - remove readNeighboursFromNode, too inefficient.*/
             //System.out.println("can read neighbours from Node");
 
             for (Node neighbour: neighboursOfThisNode){
