@@ -202,8 +202,12 @@ public class FileHandler {
 
             boolean found=false;
 
+            //infinitely loops here, need to work out why conditions arent being met
             while (line != null && !found){
+                //System.out.println(line); //it gets stuck on the first line
                 if (line.substring(0,length).equals(nodeName)){
+                    System.out.println("matches nodes");
+                    //not getting past matching condition
                     finalLine=line;
                     found=true;
 
@@ -224,9 +228,8 @@ public class FileHandler {
 
                         neighboursToAdd.add(newNode);
                     }
-
-                    line=br.readLine();
                 }
+                line=br.readLine();
             }
 
         }

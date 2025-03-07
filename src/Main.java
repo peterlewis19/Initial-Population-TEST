@@ -31,11 +31,16 @@ public class Main {
 
         //adds the neighbours to each node
         for (Node node: graph){
-            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt"); /// gets stuck on this MAKE MORE EFFICIENT
+            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
+            /// gets stuck on this MAKE MORE EFFICIENT
+            /*TODO:
+            *  - combine neighbour adding with Node adding
+            *  - remove readNeighboursFromNode, too inefficient.*/
             //System.out.println("can read neighbours from Node");
 
             for (Node neighbour: neighboursOfThisNode){
                 node.addNeighbour(neighbour);
+                System.out.println(neighbour);
             }
         }
 
@@ -55,6 +60,11 @@ public class Main {
             // to get the neighbour closest to destination
             neighboursOfANode.sort(Comparator.comparingDouble(destination::distanceTo));
             System.out.println("gets past sorting");
+
+            for (Node neighbour: neighboursOfANode){
+                System.out.println(neighbour);
+            }
+
             current = neighboursOfANode.get(0);
 
             finalRoute.add(current);
