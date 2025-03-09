@@ -44,7 +44,7 @@ public class Node {
         String strx = Double.toString(x);
         String stry = Double.toString(y);
 
-        return strx + ", " + stry;
+        return strx + "," + stry;
     }
 
     //returns the distance to another node
