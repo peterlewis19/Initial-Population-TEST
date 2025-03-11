@@ -210,6 +210,7 @@ public class FileHandler {
                 ///gives 10, [50,50]-[2, 50.0, 50.0, line isn't taking doubles
                 /// SO change values in map.txt to 50.0, doubles, etc
                 if (line.substring(1,length+1).equals(nodeName)){
+                    System.out.println(line.substring(1,length+1) +","+nodeName);
                     System.out.println("matches nodes");
                     //not getting past matching condition
                     finalLine=line;

@@ -3,10 +3,18 @@ import java.util.ArrayList;
 public class Node {
     private double[] coords;
     private ArrayList<Node> neighbours;
+    Node next;
+    //static int idNumber;
+    //private int thisID;
+
+    // neighbours will be arraylists, no order implied
+
 
     public Node(double[] coords){
         this.coords = coords;
         this.neighbours = new ArrayList<>();
+       // thisID = idNumber;
+        //idNumber++;
     }
 
     public void addNeighbour(Node neighbour){
@@ -58,6 +66,10 @@ public class Node {
         distance = Math.sqrt(Math.pow(changeInX,2) + Math.pow(changeInY,2));
 
         return distance;
+    }
+
+    public Node getNext(){
+        return next;
     }
 
 
