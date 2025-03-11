@@ -24,10 +24,8 @@ public class Node {
         return next;
     }
 
-    public void addNeighbour(Node neighbour){
-        int currentID = neighbour.getID();
-
-        neighbours.add(currentID);
+    public void addNeighbour(int ID){
+        neighbours.add(ID);
     }
 
     public ArrayList<Integer> getNeighbours(){

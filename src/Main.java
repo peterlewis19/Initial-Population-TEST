@@ -24,31 +24,31 @@ public class Main {
         * */
         //Node[] graph = generatePoints(NUM_OF_POINTS);
 
-        ArrayList<Node> graph = FileHandler.readNodesFromFile("map.txt");
-        //TODO:
-        // -implement get Node by ID, for graph
-        //System.out.println("will read nodes from file");
-        destination = graph.getLast();
+        Map graph = new Map(FileHandler.readNodesFromFile("map.txt"));
+        destination = graph.get(graph.size()-1);
         current = graph.get(0);
 
+        System.out.println("stage 1");
+
         //adds the neighbours to each node
-        for (Node node: graph){
+        for (int i=0; i< graph.size(); i++){
+            Node node = graph.get(i);
             ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
 
-
             for (Node neighbour: neighboursOfThisNode){
-                node.addNeighbour(neighbour);
-                //System.out.println(node +"->"+neighbour);
+                //gets the ID for the Node in the graph which shares the coords with the neighbour Node in neighoursOfThisNode
+                node.addNeighbour(graph.getIDByCoords(neighbour.getCoords()));
             }
         }
-        /*
-        Node nodeToFind = graph.get(3);
 
-        ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(nodeToFind, "map.txt");
-        for (Node neighbour: neighboursOfThisNode){
-            nodeToFind.addNeighbour(neighbour);
-            System.out.println(neighbour);
+        /*
+        for (int i=0; i < graph.size(); i++){
+            for (int eyedee: graph.get(i).getNeighbours()){
+                System.out.print(eyedee+",");
+            }
+            System.out.println();
         }*/
+        //IT WORKS< EACH NEIGHBOUR IS NOW STORED BY ID
 
         System.out.println("neighbours are added");
 
@@ -61,11 +61,15 @@ public class Main {
             System.out.println("CURRENT:"+current);
             //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
             //sorting by distance to finalNode
+
+
+            //all this is dookie and messy, bad practice and naming
             neighbourIndexOfANode = current.getNeighbours();
             ArrayList<Node> neighboursOfANode = new ArrayList<>();
 
             for (int index: neighbourIndexOfANode){
-                neighboursOfANode.add(graph.getByID(index));
+                neighboursOfANode.add(graph.getNodeByID(index));
+                System.out.println(graph.getNodeByID(index).getID()+", "+graph.getNodeByID(index));
             }
 
             ///REASON FOR NOT WORKING
