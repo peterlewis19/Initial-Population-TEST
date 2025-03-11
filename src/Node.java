@@ -5,6 +5,7 @@ public class Node {
     private ArrayList<Node> neighbours;
     private static int iDcounter;
     private int thisID;
+    Node next;
 
 
     public Node(double[] coords){
@@ -13,6 +14,10 @@ public class Node {
         this.neighbours = new ArrayList<>();
 
         iDcounter++;
+    }
+
+    public Node getNext(){
+        return next;
     }
 
     public void addNeighbour(Node neighbour){
