@@ -25,7 +25,7 @@ public class Main {
         //Node[] graph = generatePoints(NUM_OF_POINTS);
 
         ArrayList<Node> graph = FileHandler.readNodesFromFile("map.txt");
-        System.out.println("will read nodes from file");
+        //System.out.println("will read nodes from file");
         destination = graph.getLast();
         current = graph.get(0);
 
@@ -35,14 +35,22 @@ public class Main {
             /// gets stuck on this MAKE MORE EFFICIENT
             /*TODO:
             *  - combine neighbour adding with Node adding
-            *  - remove readNeighboursFromNode, too inefficient.*/
-            //System.out.println("can read neighbours from Node");
+            *  - remove readNeighboursFromNode, too inefficient.
+            */
 
             for (Node neighbour: neighboursOfThisNode){
                 node.addNeighbour(neighbour);
-                System.out.println(neighbour);
+                //System.out.println(node +"->"+neighbour);
             }
         }
+        /*
+        Node nodeToFind = graph.get(3);
+
+        ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(nodeToFind, "map.txt");
+        for (Node neighbour: neighboursOfThisNode){
+            nodeToFind.addNeighbour(neighbour);
+            System.out.println(neighbour);
+        }*/
 
         System.out.println("neighbours are added");
 
@@ -51,25 +59,33 @@ public class Main {
         // neighbour closest to the destination, until it reaches destination or it
         // reaches an arbitrary number of points
         while (!current.equals(destination) && k < 15 ){
+            System.out.println("CURRENT:"+current);
             //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
             //sorting by distance to finalNode
             neighboursOfANode = current.getNeighbours();
-
-            System.out.println("gets past getting the neighbours");
-            //sorts neighbours of a node then picks first
-            // to get the neighbour closest to destination
-            neighboursOfANode.sort(Comparator.comparingDouble(destination::distanceTo));
-            System.out.println("gets past sorting");
+            ///REASON FOR NOT WORKING
+            /// THEY ARE NOT THE SAME NODE IN MEMORY, ONLY A NODE WITH SAME COORDINATES
+            /// USE INDEX OF GRAPH, assuming initial graph is unchanging
 
             for (Node neighbour: neighboursOfANode){
                 System.out.println(neighbour);
             }
 
-            current = neighboursOfANode.get(0);
+            //System.out.println("gets past getting the neighbours");
+            //sorts neighbours of a node then picks first
+            // to get the neighbour closest to destination
+            neighboursOfANode.sort(Comparator.comparingDouble(destination::distanceTo));
+            System.out.println("sorted:");
 
+            for (Node neighbour: neighboursOfANode){
+                System.out.println(neighbour);
+            }
+
+            System.out.println(neighboursOfANode.size());
+            current = neighboursOfANode.get(0);
             finalRoute.add(current);
 
-            System.out.println(k);
+            //System.out.println(k);
             k++;
         }
 
