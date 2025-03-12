@@ -14,7 +14,7 @@ public class Main {
         Node current;
         int k=0;
 
-        ArrayList<Node> neighboursOfANode = new ArrayList<>();
+        ArrayList<Integer> neighbourIndexOfANode = new ArrayList<>();
         ArrayList<Node> finalRoute = new ArrayList<>();
 
         //gets map data from file
@@ -25,6 +25,8 @@ public class Main {
         //Node[] graph = generatePoints(NUM_OF_POINTS);
 
         ArrayList<Node> graph = FileHandler.readNodesFromFile("map.txt");
+        //TODO:
+        // -implement get Node by ID, for graph
         //System.out.println("will read nodes from file");
         destination = graph.getLast();
         current = graph.get(0);
@@ -32,11 +34,7 @@ public class Main {
         //adds the neighbours to each node
         for (Node node: graph){
             ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
-            /// gets stuck on this MAKE MORE EFFICIENT
-            /*TODO:
-            *  - combine neighbour adding with Node adding
-            *  - remove readNeighboursFromNode, too inefficient.
-            */
+
 
             for (Node neighbour: neighboursOfThisNode){
                 node.addNeighbour(neighbour);
@@ -63,7 +61,13 @@ public class Main {
             System.out.println("CURRENT:"+current);
             //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
             //sorting by distance to finalNode
-            neighboursOfANode = current.getNeighbours();
+            neighbourIndexOfANode = current.getNeighbours();
+            ArrayList<Node> neighboursOfANode = new ArrayList<>();
+
+            for (int index: neighbourIndexOfANode){
+                neighboursOfANode.add(graph.getByID(index));
+            }
+
             ///REASON FOR NOT WORKING
             /// THEY ARE NOT THE SAME NODE IN MEMORY, ONLY A NODE WITH SAME COORDINATES
             /// USE INDEX OF GRAPH, assuming initial graph is unchanging

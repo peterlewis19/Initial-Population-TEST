@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Node {
     private double[] coords;
-    private ArrayList<Node> neighbours;
+    private ArrayList<Integer> neighbours;
     private static int iDcounter;
     private int thisID;
     Node next;
@@ -16,19 +16,25 @@ public class Node {
         iDcounter++;
     }
 
+    public int getID(){
+        return thisID;
+    }
+
     public Node getNext(){
         return next;
     }
 
     public void addNeighbour(Node neighbour){
-        neighbours.add(neighbour);
+        int currentID = neighbour.getID();
+
+        neighbours.add(currentID);
     }
 
-    public ArrayList<Node> getNeighbours(){
+    public ArrayList<Integer> getNeighbours(){
         return neighbours;
     }
 
-    public boolean isNeighbour(Node neighbour){
+    /*public boolean isNeighbour(Node neighbour){
         boolean isNeighbour = false;
         ArrayList<Node> neighboursOfNeighbour = neighbour.getNeighbours();
 
@@ -40,8 +46,7 @@ public class Node {
         }
 
         return isNeighbour;
-
-    }
+    }*/
 
     public double[] getCoords(){
         return coords;
