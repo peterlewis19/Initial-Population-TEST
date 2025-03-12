@@ -58,6 +58,7 @@ public class Main {
         //from the currentNode, it checks against the neighbours and moves to the
         // neighbour closest to the destination, until it reaches destination or it
         // reaches an arbitrary number of points
+        // this is a stinky algorithm. TODO: FIX IT!
         while (!current.equals(destination) && k < 15 ){
             System.out.println("CURRENT:"+current);
             //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
