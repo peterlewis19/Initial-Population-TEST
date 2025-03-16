@@ -9,10 +9,13 @@ public class Map {
         this.map = map;
     }
 
+    //TS NEEDS FIXING!!
     public Node getNodeByID(int ID){
         //if node isn't present, it returns -1, causing errors
+        int index = lookFor(ID, map.size(), 0, -1);
+        System.out.println(index);
 
-        return map.get(lookFor(ID, map.size(), 0));
+        return map.get(index);
     }
 
     public int getIDByCoords(double[] coords){
@@ -41,13 +44,17 @@ public class Map {
         return map.size();
     }
 
-    public int lookFor(int target, int max, int min){
+    public int lookFor(int target, int max, int min, int finalIndex){
         int midpoint = (int)((max+min)/2);
+
+        System.out.println("MAX: "+ map.get(max-1) +"("+(max-1)+")");
+        System.out.println("MIN: "+ map.get(min) +"("+min+")");
 
         //target has been found
         if (map.get(midpoint).getID() == target){
             System.out.println(target+ " is in the list at index "+midpoint);
-            return midpoint;
+            finalIndex = midpoint;
+            return finalIndex;
         }
 
         //then the target is not present
@@ -64,9 +71,9 @@ public class Map {
         }
 
         //System.out.println(data[min] + ", "+ data[max]);
-        lookFor(target, max, min);
+        lookFor(target, max, min, finalIndex);
 
-        return -1;
+        return finalIndex;
     }
 
 

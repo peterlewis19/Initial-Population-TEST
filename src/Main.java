@@ -14,7 +14,7 @@ public class Main {
         Node current;
         int k=0;
 
-        ArrayList<Integer> neighbourIndexOfANode = new ArrayList<>();
+        ArrayList<Integer> neighbourIDOfANode = new ArrayList<>();
         ArrayList<Node> finalRoute = new ArrayList<>();
 
         //gets map data from file
@@ -41,70 +41,52 @@ public class Main {
             }
         }
 
-        /*
-        for (int i=0; i < graph.size(); i++){
-            for (int eyedee: graph.get(i).getNeighbours()){
-                System.out.print(eyedee+",");
-            }
-            System.out.println();
-        }*/
-        //IT WORKS< EACH NEIGHBOUR IS NOW STORED BY ID
+        //testing out getNodeBYID using binary search
+
+        Node foundNode = graph.getNodeByID(3);
 
         System.out.println("neighbours are added");
 
-
-        //from the currentNode, it checks against the neighbours and moves to the
-        // neighbour closest to the destination, until it reaches destination or it
-        // reaches an arbitrary number of points
-        // this is a stinky algorithm. TODO: FIX IT!
-        while (!current.equals(destination) && k < 15 ){
+        int nextNodeID;
+        Random random = new Random();
+        //from currentNode, checks neighbours and makes decision based off that
+        //current basis is randomness for ease
+        while (!current.equals(destination)){
             System.out.println("CURRENT:"+current);
-            //CHANGED FROM GRAPH_GENERATION, from sorting by distance to current node to
-            //sorting by distance to finalNode
 
 
-            //all this is dookie and messy, bad practice and naming
-            neighbourIndexOfANode = current.getNeighbours();
-            ArrayList<Node> neighboursOfANode = new ArrayList<>();
+            neighbourIDOfANode = current.getNeighbours();
 
-            for (int index: neighbourIndexOfANode){
-                neighboursOfANode.add(graph.getNodeByID(index));
-                System.out.println(graph.getNodeByID(index).getID()+", "+graph.getNodeByID(index));
+            /*for (int id: neighbourIDOfANode){
+                System.out.print(id+", ");
             }
+            System.out.println();*/
 
-            ///REASON FOR NOT WORKING
-            /// THEY ARE NOT THE SAME NODE IN MEMORY, ONLY A NODE WITH SAME COORDINATES
-            /// USE INDEX OF GRAPH, assuming initial graph is unchanging
 
-            for (Node neighbour: neighboursOfANode){
-                System.out.println(neighbour);
-            }
 
-            //System.out.println("gets past getting the neighbours");
-            //sorts neighbours of a node then picks first
-            // to get the neighbour closest to destination
-            neighboursOfANode.sort(Comparator.comparingDouble(destination::distanceTo));
-            System.out.println("sorted:");
+           /* We have list of neighbours:
+           how do we choose from these for the next step
+           choices:
+           - shortest distance to final destination
+           - randomly choosing one of the neighbours EASIER, started on 16.3.24
 
-            for (Node neighbour: neighboursOfANode){
-                System.out.println(neighbour);
-            }
+           all require backtracking
+           how to implement it:
+           - store the previous node visited in the linked list of the route
+           - go to it, check for other unvisited points, if any are available, go to those
+           - repeat until there is an available neighbour and go to it.
+            */
 
-            System.out.println(neighboursOfANode.size());
-            current = neighboursOfANode.get(0);
+            //current has become the next Node
+            ///nextNodeID = neighbourIDOfANode.get(random.nextInt(neighbourIDOfANode.size()));
+            ///current = graph.getNodeByID(nextNodeID);
+
             finalRoute.add(current);
-
-            //System.out.println(k);
-            k++;
         }
 
         for (Node node: finalRoute){
             System.out.println(node);
         }
-
-        //using allNeighbours, draw the graph
-        //NewFrame frame = new NewFrame();
-        //frame.drawFrame(finalRoute);
 
     }
 
