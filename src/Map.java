@@ -9,11 +9,11 @@ public class Map {
         this.map = map;
     }
 
-    //TS NEEDS FIXING!!
+    //TS NEEDS FIXING!! no longer use recursion
     public Node getNodeByID(int ID){
         //if node isn't present, it returns -1, causing errors
-        int index = lookFor(ID, map.size(), 0, -1);
-        System.out.println(index);
+        int index = binSearch(ID, map.size(), 0);
+        //System.out.println(index);
 
         return map.get(index);
     }
@@ -74,6 +74,15 @@ public class Map {
         lookFor(target, max, min, finalIndex);
 
         return finalIndex;
+    }
+
+    public int binSearch(int target, int max, int min){
+        int midpoint = (int)(min+max)/2;
+        boolean passed = false;
+
+        while (map.get(midpoint).getID() != target && !passed){
+
+        }
     }
 
 
