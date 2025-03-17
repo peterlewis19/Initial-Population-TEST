@@ -1,13 +1,16 @@
+import java.util.ArrayList;
+
 public class Route {
     private Node head;
     private Node next;
 
-    public Route(double[][] values) {
-        Node n = new Node(values[0]);
+    public Route(ArrayList<Node> values) {
+        //Node n = new Node(values.get(0));
+        Node n = values.get(0);
         head = n;
 
-        for (int i=1; i<values.length; i++) {
-            n.next = new Node(values[i]);
+        for (int i=1; i<values.size(); i++) {
+            n.next = values.get(i);
             n = n.next;
         }
     }
@@ -50,8 +53,8 @@ public class Route {
     }
 
     //goes to end of linkedlist, modifies nextNode to the one given
-    public void addItem(double[] coords){
-        Node nodeToAdd = new Node(coords);
+    public void addItem(Node nodeToAdd){
+        //Node nodeToAdd = new Node(coords);
 
         Node head = getHead();
         Node n = head;

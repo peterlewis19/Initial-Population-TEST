@@ -1,14 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MyCanvas extends JComponent {
 
-    private ArrayList<Node> routeToDraw;
+    private ArrayList<Route> allRoutesToDraw;
 
-    public MyCanvas(ArrayList<Node> routeToDraw){
-        this.routeToDraw = routeToDraw;
+    public MyCanvas(ArrayList<Route> routeToDraw){
+        this.allRoutesToDraw = routeToDraw;
     }
 
     @Override
@@ -23,43 +22,64 @@ public class MyCanvas extends JComponent {
         g2d.setColor(Color.BLUE);
         g2d.setStroke(new BasicStroke(2)); // Line thickness = 2
 
-        // Draw a line from point (50, 50) to point (300, 300)
-        //g2d.drawLine(50, 50, 300, 300);
-
-        //Scanner input  = new Scanner(System.in);
-
-        /*for (Node nodeAndNeighbour: routeToDraw){
-            //go to nodeAndNeighbour.get(0)
-            double startX = nodeAndNeighbour.getCoords()[0];
-            double startY = nodeAndNeighbour.getCoords()[1];
-
-
-        }*/
     }
 
-    /*public void paint(Graphics g) {
+    public void paint(Graphics g) {
         setForeground(Color.BLUE);
-        setBackground(Color.ORANGE);
+        setBackground(Color.WHITE);
+        int crossStartX=0;
+        int crossEndX=0;
+        int crossStartY =0;
+        int crossEndY=0;
 
-        //setBounds(50,50,500,500);
+        for (Route routeToDraw: allRoutesToDraw) {
 
-        /*for (ArrayList<Node> nodeAndNeighbour: allNeighbours){
-            //go to nodeAndNeighbour.get(0)
-            int startX = nodeAndNeighbour.get(0).getCoords()[0];
-            int startY = nodeAndNeighbour.get(0).getCoords()[1];
+            //for (int i = 0; i < routeToDraw.size() - 1; i++) {
+            Node n = routeToDraw.getHead();
+            System.out.println("THIS ROUTE:");
 
-            // draw a line to nodeAndNeighbour.get(1,2,3etc)
+            while (n.next != null){
+                System.out.print("THIS PASS:");
+                //go to nodeAndNeighbour.get(0)
+                int startX = (int) (n.getCoords()[0] * 15) + 100;
+                int startY = (int) n.getCoords()[1] * 15;
 
-            for (int i = 1; i < nodeAndNeighbour.size(); i++) {
-                int endX = nodeAndNeighbour.get(i).getCoords()[0];
-                int endY = nodeAndNeighbour.get(i).getCoords()[1];
+                int endX = (int) (n.next.getCoords()[0] * 15) + 100;
+                int endY = (int) n.next.getCoords()[1] * 15;
+
+                System.out.print("START:"+startX + ", "+ startY);
+                System.out.print("END:"+endX + ", "+ endY);
 
                 g.drawLine(startX, startY, endX, endY);
+
+                n=n.next;
+
+                System.out.println();
             }
 
+
+            crossStartX = (int)(allRoutesToDraw.getFirst().getHead().getCoords()[0]*15) + 100;
+            crossStartY = (int)allRoutesToDraw.getFirst().getHead().getCoords()[1]*15;
+
+            crossEndX = (int)(n.getCoords()[0]*15) + 100;
+            crossEndY = (int)n.getCoords()[1]*15;
         }
 
 
+        //marks the start and end with crosses
+        //int startX = (int)(allRoutesToDraw.getFirst().getHead().getCoords()[0]*15) + 100;
+        //int startY = (int)allRoutesToDraw.getFirst().getHead().getCoords()[1]*15;
+
+        //int endX = (int)(routeToDraw.getLast().getCoords()[0]*15) + 100;
+        //int endY = (int)routeToDraw.getLast().getCoords()[1]*15;
+
+
+        //highlight start and end with a cross
+        g.drawLine(crossStartX - 5, crossStartY - 5, crossStartX + 5, crossStartY + 5);
+        g.drawLine(crossStartX - 5, crossStartY + 5, crossStartX + 5, crossStartY - 5);
+
+        g.drawLine(crossEndX - 5, crossEndY - 5, crossEndX + 5, crossEndY + 5);
+        g.drawLine(crossEndX - 5, crossEndY + 5, crossEndX + 5, crossEndY - 5);
     }
-    */
+
 }

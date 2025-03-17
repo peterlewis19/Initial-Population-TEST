@@ -12,7 +12,7 @@ public class Map {
     //TS NEEDS FIXING!! no longer use recursion
     public Node getNodeByID(int ID){
         //if node isn't present, it returns -1, causing errors
-        int index = binSearch(ID, map.size(), 0);
+        int index = binarySearch(0, map.size(), ID);
         //System.out.println(index);
 
         return map.get(index);
@@ -76,13 +76,25 @@ public class Map {
         return finalIndex;
     }
 
-    public int binSearch(int target, int max, int min){
-        int midpoint = (int)(min+max)/2;
-        boolean passed = false;
+    int binarySearch(int min, int max, int target)
+    {
+        while (min <= max) {
+            int midpoint = (min + max) / 2;
 
-        while (map.get(midpoint).getID() != target && !passed){
+            if (map.get(midpoint).getID() == target) {
+                return midpoint;
 
+              //halves the list into top or bottom half
+            } else if (map.get(midpoint).getID() > target) {
+                max = midpoint - 1;
+
+            } else {
+                min = midpoint + 1;
+            }
         }
+
+        // not there
+        return -1;
     }
 
 

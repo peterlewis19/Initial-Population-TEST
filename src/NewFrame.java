@@ -7,12 +7,12 @@ import static java.awt.SystemColor.window;
 // Driver Class
 public class NewFrame {
     // Main Function
-    public void drawFrame(ArrayList<Node> allNeighbours) {
+    public void drawFrame(ArrayList<Route> allRoutes) {
         // Creating instance of JFrame
         JFrame frame = new JFrame("Hardcoded local map");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        MyCanvas canvas = new MyCanvas(allNeighbours);
+        MyCanvas canvas = new MyCanvas(allRoutes);
 
         //do a canvas of only the first pass, the firrst + second, first+second+third, etc...
         //LinePanel linePanel = new LinePanel();

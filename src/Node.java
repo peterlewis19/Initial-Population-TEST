@@ -24,6 +24,10 @@ public class Node {
         return next;
     }
 
+    public void clearNext(){
+        next = null;
+    }
+
     public void addNeighbour(int ID){
         neighbours.add(ID);
     }

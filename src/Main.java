@@ -6,29 +6,21 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-
-        int NUM_OF_POINTS = 5;
-        int CLOSEST_N = 8;
-
         Node destination;
         Node current;
-        int k=0;
 
         ArrayList<Integer> neighbourIDOfANode = new ArrayList<>();
-        ArrayList<Node> finalRoute = new ArrayList<>();
+        //ArrayList<Node> finalRoute = new ArrayList<>();
+        ArrayList<Route> initialPopulation = new ArrayList<>();
+        Route initialRoute;
 
-        //gets map data from file
-        /*TODO:
-        *  -Get the initial nodes from a file and store in arrayList
-        *  -Get the neighbours for each Node, add them using add neighbour.
-        * */
-        //Node[] graph = generatePoints(NUM_OF_POINTS);
 
+        //initialises the map of coordinate data
         Map graph = new Map(FileHandler.readNodesFromFile("map.txt"));
         destination = graph.get(graph.size()-1);
         current = graph.get(0);
 
-        System.out.println("stage 1");
+        System.out.println(current +" to "+ destination);
 
         //adds the neighbours to each node
         for (int i=0; i< graph.size(); i++){
@@ -41,52 +33,65 @@ public class Main {
             }
         }
 
-        //testing out getNodeBYID using binary search
-
-        Node foundNode = graph.getNodeByID(3);
-
-        System.out.println("neighbours are added");
-
         int nextNodeID;
         Random random = new Random();
         //from currentNode, checks neighbours and makes decision based off that
         //current basis is randomness for ease
-        while (!current.equals(destination)){
-            System.out.println("CURRENT:"+current);
+
+        for (int i=0; i < 10; i++) {
+            ArrayList<Node> finalRoute = new ArrayList<>();
+            while (!current.equals(destination)) {
+                /*TODO:
+                 *  - implement the routes found as a linked list
+                 * */
 
 
-            neighbourIDOfANode = current.getNeighbours();
+                neighbourIDOfANode = current.getNeighbours();
 
-            /*for (int id: neighbourIDOfANode){
-                System.out.print(id+", ");
+               /* We have list of neighbours:
+               how do we choose from these for the next step
+               choices:
+               - shortest distance to final destination
+               - randomly choosing one of the neighbours EASIER, started on 16.3.24
+
+               all require backtracking
+               how to implement it:
+               - store the previous node visited in the linked list of the route
+               - go to it, check for other unvisited points, if any are available, go to those
+               - repeat until there is an available neighbour and go to it.
+                */
+
+                //current has become the next Node
+                nextNodeID = neighbourIDOfANode.get(random.nextInt(neighbourIDOfANode.size()));
+                current = graph.getNodeByID(nextNodeID);
+
+                finalRoute.add(current);
             }
-            System.out.println();*/
 
 
+            for (Node node: finalRoute){
+                System.out.print(node+",");
+            }
+            System.out.println();
 
-           /* We have list of neighbours:
-           how do we choose from these for the next step
-           choices:
-           - shortest distance to final destination
-           - randomly choosing one of the neighbours EASIER, started on 16.3.24
+            initialRoute = new Route(finalRoute);
+            initialRoute.display();
 
-           all require backtracking
-           how to implement it:
-           - store the previous node visited in the linked list of the route
-           - go to it, check for other unvisited points, if any are available, go to those
-           - repeat until there is an available neighbour and go to it.
-            */
+            //go through initial Route, clear NExt of every node
+            Node n = initialRoute.getHead();
 
-            //current has become the next Node
-            ///nextNodeID = neighbourIDOfANode.get(random.nextInt(neighbourIDOfANode.size()));
-            ///current = graph.getNodeByID(nextNodeID);
+            //for (int i=1; i<values.size(); i++) {
+            while (n.next != null){
+                n = n.next;
+                n.next = null;
+            }
 
-            finalRoute.add(current);
+            initialPopulation.add(initialRoute);
         }
 
-        for (Node node: finalRoute){
-            System.out.println(node);
-        }
+
+        NewFrame frame = new NewFrame();
+        frame.drawFrame(initialPopulation);
 
     }
 
