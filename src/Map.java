@@ -13,11 +13,11 @@ public class Map {
     public Node getNodeByID(int ID){
         //if node isn't present, it returns -1, causing errors
         int index = binarySearch(0, map.size(), ID);
-        //System.out.println(index);
 
         return map.get(index);
     }
 
+    ///this function is returning -1 when it shouldn't, there is a problem with comparison i think
     public int getIDByCoords(double[] coords){
         int finalID = -1;
         int count =0;

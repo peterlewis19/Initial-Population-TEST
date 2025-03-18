@@ -204,12 +204,9 @@ public class FileHandler {
 
             //infinitely loops here, need to work out why conditions arent being met
             while (line != null && !found){
-                //System.out.println(line); //it gets stuck on the first line
-                //System.out.println(length +", "+line.substring(1,length+1) + ", "+ nodeName);
-
-                ///gives 10, [50,50]-[2, 50.0, 50.0, line isn't taking doubles
-                /// SO change values in map.txt to 50.0, doubles, etc
+                //System.out.println(line.substring(1,length+1) +", "+ nodeName);
                 if (line.substring(1,length+1).equals(nodeName)){
+                    //System.out.println("ITS CONFIRMED");
                     //System.out.println("matches nodes");
                     //System.out.println(line.substring(1,length+1)+","+nodeName);
                     //not getting past matching condition
@@ -223,7 +220,6 @@ public class FileHandler {
                         String unformattedNode = allNodes[i];
                         //becomes "xx", "yy"
                         String[] formattedNode = unformattedNode.substring(1,unformattedNode.length()-1).split(",");
-                        //System.out.println(formattedNode[0] + ", "+ formattedNode[1]);
 
                         //separate x and y from original String
                         double x = Double.parseDouble(formattedNode[0]);

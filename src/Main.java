@@ -16,7 +16,7 @@ public class Main {
 
 
         //initialises the map of coordinate data
-        Map graph = new Map(FileHandler.readNodesFromFile("map.txt"));
+        Map graph = new Map(FileHandler.readNodesFromFile("realMap.txt"));
         destination = graph.get(graph.size()-1);
         current = graph.get(0);
 
@@ -25,13 +25,19 @@ public class Main {
         //adds the neighbours to each node
         for (int i=0; i< graph.size(); i++){
             Node node = graph.get(i);
-            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "map.txt");
+            ArrayList<Node> neighboursOfThisNode = FileHandler.readNeighboursFromNode(node, "realMap.txt");
+            System.out.println(node + ": ");
 
             for (Node neighbour: neighboursOfThisNode){
                 //gets the ID for the Node in the graph which shares the coords with the neighbour Node in neighoursOfThisNode
                 node.addNeighbour(graph.getIDByCoords(neighbour.getCoords()));
+
+                System.out.print(Arrays.toString(neighbour.getCoords()));
             }
+            System.out.println();
         }
+
+
 
         int nextNodeID;
         Random random = new Random();
@@ -42,7 +48,7 @@ public class Main {
         NewFrame frame = new NewFrame();
 
         //creates 4 routes for the initial pop, testing phase
-        for (int i=0; i < 4; i++) {
+        for (int i=0; i < 10; i++) {
             finalRoute = new ArrayList<>();
             //resets the route being stored every time, starting from the start
             current = graph.get(0);
@@ -56,6 +62,12 @@ public class Main {
                  * */
 
                 neighbourIDOfANode = current.getNeighbours();
+
+                for (int ID: neighbourIDOfANode){
+                    System.out.print(ID+",");
+                }
+
+                ///FOR SOME REASON< IT IS CREATING IDS OF -1
 
                /* We have list of neighbours:
                how do we choose from these for the next step
@@ -72,7 +84,9 @@ public class Main {
 
                 //current has become the next Node
                 //chooses a random neighbour ID, then moves to it
-                nextNodeID = neighbourIDOfANode.get(random.nextInt(neighbourIDOfANode.size()));
+                //System.out.println("SIZE: "+neighbourIDOfANode.size());
+                nextNodeID = neighbourIDOfANode.get(random.nextInt(0,neighbourIDOfANode.size()));
+                //the ID found for the chosen neighbour isn't currently found in the graph
                 current = graph.getNodeByID(nextNodeID);
 
 

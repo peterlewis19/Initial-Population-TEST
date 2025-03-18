@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MyCanvas extends JComponent {
 
     private ArrayList<Node> routeToDraw;
-    private final int SCALING_MULTIPLIER= 5;
+    private final int SCALING_MULTIPLIER= 200;
 
     public MyCanvas(ArrayList<Node> routeToDraw){
         this.routeToDraw = routeToDraw;
@@ -39,37 +39,29 @@ public class MyCanvas extends JComponent {
 
             //for (int i = 0; i < routeToDraw.size() - 1; i++) {
             //Node n = routeToDraw.getHead();
-            System.out.println("------");
-            System.out.println("THIS ROUTE:");
-            System.out.println();
 
             //while (n.next != null){
             for (int i=0; i < routeToDraw.size()-1; i++){
                 //System.out.print("THIS PASS:");
                 //go to nodeAndNeighbour.get(0)
                 //SEEMS TO BE SKIPPING COORDINATES
-                int startX = (int) (routeToDraw.get(i).getCoords()[0] * SCALING_MULTIPLIER) ;
-                int startY = (int) routeToDraw.get(i).getCoords()[1] * SCALING_MULTIPLIER;
+                int startX = (int) ((routeToDraw.get(i).getCoords()[0] - 51.45) * SCALING_MULTIPLIER) ;
+                int startY = (int) (routeToDraw.get(i).getCoords()[1] - 0.1) * SCALING_MULTIPLIER;
 
-                int endX = (int) (routeToDraw.get(i+1).getCoords()[0] * SCALING_MULTIPLIER) ;
-                int endY = (int) routeToDraw.get(i+1).getCoords()[1] * SCALING_MULTIPLIER;
-
-                System.out.print("START:"+startX + ", "+ startY+" ");
-                System.out.print("END:"+endX + ", "+ endY);
+                int endX = (int) ((routeToDraw.get(i+1).getCoords()[0] - 51.45) * SCALING_MULTIPLIER) ;
+                int endY = (int) (routeToDraw.get(i+1).getCoords()[1] - 0.1) * SCALING_MULTIPLIER;
 
                 g.drawLine(startX, startY, endX, endY);
 
                 //n=n.next;
-
-                System.out.println();
             }
 
 
-            crossStartX = (int)(routeToDraw.get(0).getCoords()[0]*SCALING_MULTIPLIER);
-            crossStartY = (int)routeToDraw.get(0).getCoords()[1]*SCALING_MULTIPLIER;
+            crossStartX = (int)((routeToDraw.get(0).getCoords()[0]  - 51.45)*SCALING_MULTIPLIER);
+            crossStartY = (int)(routeToDraw.get(0).getCoords()[1] - 0.1)*SCALING_MULTIPLIER;
 
-            crossEndX = (int)(routeToDraw.getLast().getCoords()[0]*SCALING_MULTIPLIER) ;
-            crossEndY = (int)routeToDraw.getLast().getCoords()[1]*SCALING_MULTIPLIER;
+            crossEndX = (int)((routeToDraw.getLast().getCoords()[0] - 51.45)*SCALING_MULTIPLIER) ;
+            crossEndY = (int)(routeToDraw.getLast().getCoords()[1] - 0.1)*SCALING_MULTIPLIER;
        // }
 
 
