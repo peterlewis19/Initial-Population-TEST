@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class MyCanvas extends JComponent {
 
-    private ArrayList<Route> allRoutesToDraw;
+    private ArrayList<Node> routeToDraw;
+    private final int SCALING_MULTIPLIER= 5;
 
-    public MyCanvas(ArrayList<Route> routeToDraw){
-        this.allRoutesToDraw = routeToDraw;
+    public MyCanvas(ArrayList<Node> routeToDraw){
+        this.routeToDraw = routeToDraw;
     }
 
     @Override
@@ -32,38 +33,44 @@ public class MyCanvas extends JComponent {
         int crossStartY =0;
         int crossEndY=0;
 
-        for (Route routeToDraw: allRoutesToDraw) {
+        //for (Route routeToDraw: allRoutesToDraw) {
+
+        //VERY INEFFICIENT, GO TO THIS MAYBE 30 TIMES RATHER THAN 4
 
             //for (int i = 0; i < routeToDraw.size() - 1; i++) {
-            Node n = routeToDraw.getHead();
+            //Node n = routeToDraw.getHead();
+            System.out.println("------");
             System.out.println("THIS ROUTE:");
+            System.out.println();
 
-            while (n.next != null){
-                System.out.print("THIS PASS:");
+            //while (n.next != null){
+            for (int i=0; i < routeToDraw.size()-1; i++){
+                //System.out.print("THIS PASS:");
                 //go to nodeAndNeighbour.get(0)
-                int startX = (int) (n.getCoords()[0] * 15) + 100;
-                int startY = (int) n.getCoords()[1] * 15;
+                //SEEMS TO BE SKIPPING COORDINATES
+                int startX = (int) (routeToDraw.get(i).getCoords()[0] * SCALING_MULTIPLIER) ;
+                int startY = (int) routeToDraw.get(i).getCoords()[1] * SCALING_MULTIPLIER;
 
-                int endX = (int) (n.next.getCoords()[0] * 15) + 100;
-                int endY = (int) n.next.getCoords()[1] * 15;
+                int endX = (int) (routeToDraw.get(i+1).getCoords()[0] * SCALING_MULTIPLIER) ;
+                int endY = (int) routeToDraw.get(i+1).getCoords()[1] * SCALING_MULTIPLIER;
 
-                System.out.print("START:"+startX + ", "+ startY);
+                System.out.print("START:"+startX + ", "+ startY+" ");
                 System.out.print("END:"+endX + ", "+ endY);
 
                 g.drawLine(startX, startY, endX, endY);
 
-                n=n.next;
+                //n=n.next;
 
                 System.out.println();
             }
 
 
-            crossStartX = (int)(allRoutesToDraw.getFirst().getHead().getCoords()[0]*15) + 100;
-            crossStartY = (int)allRoutesToDraw.getFirst().getHead().getCoords()[1]*15;
+            crossStartX = (int)(routeToDraw.get(0).getCoords()[0]*SCALING_MULTIPLIER);
+            crossStartY = (int)routeToDraw.get(0).getCoords()[1]*SCALING_MULTIPLIER;
 
-            crossEndX = (int)(n.getCoords()[0]*15) + 100;
-            crossEndY = (int)n.getCoords()[1]*15;
-        }
+            crossEndX = (int)(routeToDraw.getLast().getCoords()[0]*SCALING_MULTIPLIER) ;
+            crossEndY = (int)routeToDraw.getLast().getCoords()[1]*SCALING_MULTIPLIER;
+       // }
 
 
         //marks the start and end with crosses

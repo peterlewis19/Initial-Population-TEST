@@ -38,13 +38,22 @@ public class Main {
         //from currentNode, checks neighbours and makes decision based off that
         //current basis is randomness for ease
 
-        for (int i=0; i < 10; i++) {
-            ArrayList<Node> finalRoute = new ArrayList<>();
+        ArrayList<Node> finalRoute = new ArrayList<>();
+        NewFrame frame = new NewFrame();
+
+        //creates 4 routes for the initial pop, testing phase
+        for (int i=0; i < 4; i++) {
+            finalRoute = new ArrayList<>();
+            //resets the route being stored every time, starting from the start
+            current = graph.get(0);
+            finalRoute.add(current);
+            //System.out.println("CURRENT: "+ current);
+
             while (!current.equals(destination)) {
                 /*TODO:
-                 *  - implement the routes found as a linked list
+                 *  - implement the routes found as a linked list DONE
+                 *  - clear the finalRoute after the initial one.
                  * */
-
 
                 neighbourIDOfANode = current.getNeighbours();
 
@@ -62,9 +71,12 @@ public class Main {
                 */
 
                 //current has become the next Node
+                //chooses a random neighbour ID, then moves to it
                 nextNodeID = neighbourIDOfANode.get(random.nextInt(neighbourIDOfANode.size()));
                 current = graph.getNodeByID(nextNodeID);
 
+
+                //adds this stop to the route
                 finalRoute.add(current);
             }
 
@@ -72,26 +84,38 @@ public class Main {
             for (Node node: finalRoute){
                 System.out.print(node+",");
             }
+
             System.out.println();
 
-            initialRoute = new Route(finalRoute);
-            initialRoute.display();
+            //REMOVE LINKED LISTS FOR NOW, AS EVERY LINKED LIST HAS THE SAME HEAD !!!!
+            //Stores the route as a linked list
+            //initialRoute = new Route(finalRoute);
+            //initialRoute.display();
+
+            //initialRoute.display() is not showing the same thing as lines 81 - 84, displaying the nodes from finalRoute
 
             //go through initial Route, clear NExt of every node
-            Node n = initialRoute.getHead();
+            //Node n = initialRoute.getHead();
 
-            //for (int i=1; i<values.size(); i++) {
-            while (n.next != null){
+            //clears the next value of each Node, for the next one.
+            /*while (n.next != null){
                 n = n.next;
                 n.next = null;
-            }
+            }*/
 
-            initialPopulation.add(initialRoute);
+            //initialPopulation.add(initialRoute);
+
+            //draws finalRoute not initialRoute bc linkedlists arent working currently
+            frame.drawFrame(finalRoute);
         }
 
+        //frame.drawFrame(initialPopulation.get(0));
 
-        NewFrame frame = new NewFrame();
-        frame.drawFrame(initialPopulation);
+        //at this moment, try drawing new frame for each route
+        //frame.drawFrame(initialPopulation.get(1));
+        /*for (int i=0; i< 4; i++) {
+            frame.drawFrame(initialPopulation.get(i));
+        }*/
 
     }
 
